@@ -27,13 +27,17 @@ class iostream {   //输入输出类
 
     let xulie: Array<number> = (await io.input('输入一个非负整数序列：')).split(' ').map((item: String) => { return Number(item) })
     io.print('输入的序列为：', xulie.toString())
+    // xulie.sort()
     const start = hrtime.bigint(); // 191051479007711n
 
 
 
     let allDergee: number = xulie.reduce((a: number, b: number) => a + b) //所有顶点的度数
     io.print(allDergee % 2 ? '不可以图化' : '可以图化')  //握手定理判断是否可以图化
-
+    if (allDergee % 2) {
+        io.close() //关闭输入输出流
+        return
+    }
 
 
 
@@ -74,19 +78,24 @@ class iostream {   //输入输出类
     xulie.unshift(0)  //在数组的第一个位置插入一个0，方便下面角标从1开始
     for (let r = 1; r <= length - 1; r++) {
         let rdi = 0
-        for (let i = r+1; i <= length; i++) {
-            rdi += Math.min(r, xulie[i])  
+        for (let i = r + 1; i <= length; i++) {
+            rdi += Math.min(r, xulie[i])
         }
         let di = 0
         for (let i = 1; i <= r; i++) {
             di += xulie[i]  //计算前r个元素的度数
         }
+        
         if (di > rdi + r * (r - 1)) {  //如果前r个元素的度数大于rdi+r(r-1)，则不能简单图化
             flag = false
             break
         }
     }
     io.print(flag ? '可以简单图化' : '不能简单图化')
+    if (!flag) {
+        io.close() //关闭输入输出流
+        return
+    }
     xulie.shift()   //删除数组的第一个元素的0
 
 
@@ -115,7 +124,7 @@ class iostream {   //输入输出类
                 if (ii == jj) continue;  //排除自己和自己相邻的情况
                 map[ii][jj] = map[jj][ii] = 1; //两个顶点相邻
                 dfs(ii, jj, dergee + 2);
-                map[ii][jj] = map[jj][ii] = 0; //回溯恢复状态
+                map[ii][jj] = map[jj][ii] = 0; //恢复状态
             }
         }
     }
@@ -126,27 +135,33 @@ class iostream {   //输入输出类
     mapAll.forEach((item) => { //遍历所有的相邻矩阵，判断是否为连通图
         let temp: Array<Array<number>> = JSON.parse(item);
         io.print('邻接矩阵：', temp);
+        // io.print(xulie)
+        if (xulie[0] == 0) { //如果序列的最后一个元素为0，则说明一定有孤立点
+            io.print('不是连通图')
+        } else {
+            function dfs2(v: number) { //使用dfs算法判断是否为连通图
 
-        function dfs2(v: number) { //使用dfs算法判断是否为连通图
-            
-            for (let i = 0; i < length; i++) {
-                if (temp[v][i] == 1) { //如果两个顶点相邻
-                    temp[v][i] = temp[i][v] = 0;  //删除两个顶点的相邻关系  
-                    dfs2(i); //递归遍历
+                for (let i = 0; i < length; i++) {
+                    if (temp[v][i] == 1) { //如果两个顶点相邻
+                        temp[v][i] = temp[i][v] = 0;  //删除两个顶点的相邻关系  
+                        // io.print(temp)
+                        dfs2(i); //递归遍历
+                    }
+                }
+                
+            }
+            dfs2(0)
+            let flag = true
+            for (let i of temp) {
+                if (i.indexOf(1) != -1) { //如果邻接矩阵中还有1，则说明不是连通图
+                    flag = false
+                    break
                 }
             }
-            
+            io.print(flag ? '是连通图' : '不是连通图')
+        }
 
-        }
-        dfs2(0)
-        let flag = true
-        for (let i of temp) {
-            if (i.indexOf(1) != -1) { //如果邻接矩阵中还有1，则说明不是连通图
-                flag = false
-                break
-            }
-        }
-        io.print(flag ? '是连通图' : '不是连通图')
+
     })
 
 
