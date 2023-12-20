@@ -187,25 +187,32 @@ class Matrix {
 
     io.print('输入一个相邻矩阵，以空格分割，以回车结尾')
     let xianglinTemp: Array<Array<number>> = []
-    while (true) {
-        let inputStr: String = await io.input()
-        if (inputStr === '') {
-            break
-        }
-        xianglinTemp.push(inputStr.split(' ').map((item: String) => { return Number(item) }))
-    }
+    // while (true) {
+    //     let inputStr: String = await io.input()
+    //     if (inputStr === '') {
+    //         break
+    //     }
+    //     xianglinTemp.push(inputStr.split(' ').map((item: String) => { return Number(item) }))
+    // }
     // io.print(xianglinTemp)
-    // xianglinTemp =
-    //     [[0, 1, 0, 0, 1],
-    //     [1, 0, 1, 0, 1],
-    //     [1, 0, 0, 1, 1],
-    //     [0, 0, 1, 0, 1],
-    //     [1, 1, 1, 1, 0]]
-    // xianglinTemp = [[0, 1, 1, 1],
-    // [1, 0, 1, 0],
-    // [1, 1, 0, 1],
-    // [1, 0, 1, 0]]
-    // xianglinTemp = [[0, 1, 1, 1], [1, 0, 0, 1], [1, 0, 0, 1], [1, 1, 1, 0]]
+
+    /*0 1 1
+    1 0 1
+    1 1 0 */
+    xianglinTemp = [[0, 1, 1], [1, 0, 1], [1, 1, 0]]
+    /*0 1 1 1
+    1 0 0 1
+    1 0 0 1
+    1 1 1 0 */
+    xianglinTemp = [[0, 1, 1, 1], [1, 0, 0, 1], [1, 0, 0, 1], [1, 1, 1, 0]]
+    /*0 1 1 1 0 1
+    1 0 0 1 0 1
+    1 0 0 1 0 0
+    1 1 1 0 1 0
+    0 0 0 1 0 1
+    1 1 0 0 1 0 */
+    xianglinTemp = [[0, 1, 1, 1, 0, 1], [1, 0, 0, 1, 0, 1], [1, 0, 0, 1, 0, 0], [1, 1, 1, 0, 1, 0], [0, 0, 0, 1, 0, 1], [1, 1, 0, 0, 1, 0]]
+
     let xianglin = new Matrix(xianglinTemp)
 
 
@@ -375,6 +382,7 @@ class Matrix {
         ListBuji.data.forEach((item: linjie) => {
             let ans: number[][] = []
             dfs(item.v1, item.v2, list, ans)
+            ans[0].push(item.e)
             huanlukongjian.push(...ans)
             io.print(`这棵树的e${item.e}的基本回路系统`, ans[0].map((item) => { return 'e' + item }).toString())
         })
@@ -447,6 +455,7 @@ class Matrix {
             // io.print(item, duichencha(...item))
         })
         io.print('这棵树的断集空间：', duanjikongjianAns)
+
 
     })
 

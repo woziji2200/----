@@ -1,5 +1,6 @@
-        // result.forEach((item: any) => {
-        //     let temp = new Matrix(item.Matrix.data)
-        //     temp.deleteRow(0)
-        //     return temp.getDeterminant(temp.data)
-        // })
+    let graph: number[][] = [
+        [1, 0, 0, 1, 1],
+        [1, 1, 0, 0, 0],
+        [0, 0, 1, 1, 0],
+        [0, 1, 1, 0, 1]
+    ]
