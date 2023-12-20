@@ -212,6 +212,11 @@ class Matrix {
     0 0 0 1 0 1
     1 1 0 0 1 0 */
     xianglinTemp = [[0, 1, 1, 1, 0, 1], [1, 0, 0, 1, 0, 1], [1, 0, 0, 1, 0, 0], [1, 1, 1, 0, 1, 0], [0, 0, 0, 1, 0, 1], [1, 1, 0, 0, 1, 0]]
+    /*0 2 1 0
+2 0 0 1
+1 0 0 1
+0 1 1 0 */
+    // xianglinTemp = [[0, 2, 1, 0], [2, 0, 0, 1], [1, 0, 0, 1], [0, 1, 1, 0]]
 
     let xianglin = new Matrix(xianglinTemp)
 
@@ -221,9 +226,13 @@ class Matrix {
         let linjiebiao: AdjacencyList = new AdjacencyList([])
         for (let i = 0; i < xianglin2.getRowLength(); i++) {
             for (let j = i + 1; j < xianglin2.getColLength(); j++) {
-                if (xianglin2.data[i][j] === 1) {
+                for (let k = 0; k < xianglin2.data[i][j]; k++) {
                     linjiebiao.data.push({ v1: Math.min(i, j), v2: Math.max(i, j), e: linjiebiao.data.length })
+
                 }
+                // if (xianglin2.data[i][j] >= 1) {
+                //     linjiebiao.data.push({ v1: Math.min(i, j), v2: Math.max(i, j), e: linjiebiao.data.length })
+                // }
             }
         }
         return linjiebiao
@@ -283,11 +292,12 @@ class Matrix {
         for (let i = 0; i < e.length; i++) {
             let v1 = -1, v2 = -1
             for (let j = 0; j < v.length; j++) {
-                if (guanlian2.data[j][i] == 1) {
+                if (guanlian2.data[j][i] >= 1) {
                     if (v1 == -1 && v2 == -1) {
                         v1 = v[j]
                     } else if (v1 != -1 && v2 == -1) {
                         v2 = v[j]
+                        // for(let k = 0; k < guanlian2.data[j][i]; k++)
                         linjiebiao.data.push({ v1: v1, v2: v2, e: e[i] })
                         break
                     }
@@ -301,6 +311,9 @@ class Matrix {
 
 
     shengchengshuResult.forEach((item: { Matrix: Matrix; e: number[]; v: number[] }) => {
+        // io.print('生成树：', item.Matrix.data)
+        // io.print('生成树e：', item.e)
+        // io.print('生成树v：', item.v)
         let list = guanlianToLinjiebiao(item.Matrix, item.e, item.v)
         let ListBuji = new AdjacencyList([])
         linjiebiao.data.forEach((item: linjie) => {
@@ -372,7 +385,7 @@ class Matrix {
                 }
             }
         }
-        io.print('生成树的邻接表：', list)
+        io.print('\n======================\n生成树的邻接表：', list)
 
 
 
@@ -458,6 +471,7 @@ class Matrix {
 
 
     })
+    io.print(`共有${shengchengshuResult.length}棵生成树`)
 
 
     io.close()
