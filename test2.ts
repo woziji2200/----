@@ -199,7 +199,7 @@ class Matrix {
     /*0 1 1
     1 0 1
     1 1 0 */
-    xianglinTemp = [[0, 1, 1], [1, 0, 1], [1, 1, 0]]
+    //xianglinTemp = [[0, 1, 1], [1, 0, 1], [1, 1, 0]]
     /*0 1 1 1
     1 0 0 1
     1 0 0 1
@@ -216,7 +216,8 @@ class Matrix {
 2 0 0 1
 1 0 0 1
 0 1 1 0 */
-    // xianglinTemp = [[0, 2, 1, 0], [2, 0, 0, 1], [1, 0, 0, 1], [0, 1, 1, 0]]
+    xianglinTemp = [[0, 2, 1, 0], [2, 0, 0, 1], [1, 0, 0, 1], [0, 1, 1, 0]]
+    xianglinTemp = [[0,1,1],[1,0,0],[1,0,0]]
 
     let xianglin = new Matrix(xianglinTemp)
 
@@ -311,7 +312,7 @@ class Matrix {
 
 
     shengchengshuResult.forEach((item: { Matrix: Matrix; e: number[]; v: number[] }) => {
-        // io.print('生成树：', item.Matrix.data)
+        io.print('生成树：', item.Matrix.data)
         // io.print('生成树e：', item.e)
         // io.print('生成树v：', item.v)
         let list = guanlianToLinjiebiao(item.Matrix, item.e, item.v)
